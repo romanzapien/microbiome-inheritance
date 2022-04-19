@@ -1441,8 +1441,89 @@ def figsup4(spe_args):
     
 
 # Figure Sup 5
-
+    
 def figsup5(spe_args):
+    
+    rep_spe = 0
+    
+    [N_spe, m_spe, t_spe, p_spe, AB_i, Be] = spe_args
+    
+    p_set = [i * j for j in np.logspace(-5, 0, 6) for i in [1., 2., 4., 7.]][:-3]
+
+    m_set = [i * j for j in np.logspace(-5, 0, 6) for i in [1., 2., 4., 7.]][:-3]
+
+    t_set = [i * j for j in np.logspace(-7, -2, 6) for i in [1., 2., 4., 7.]][:-3]
+
+    N_set = [i * j for j in np.logspace(3, 7, 5) for i in [1., 2., 4., 7.]][:-3]
+        
+    fig = mp.figure(figsize = (9.9, 2.5))
+
+    gs = gridspec.GridSpec(1, 2, figure = fig, hspace = 0.5, wspace = 0.15)
+
+    gs00 = gridspec.GridSpecFromSubplotSpec(9, 8, subplot_spec=gs[0], hspace = 0.9)
+    
+    gs01 = gridspec.GridSpecFromSubplotSpec(9, 8, subplot_spec=gs[1], hspace = 0.9)
+
+    axes_00_0 = fig.add_subplot(gs00[:4, :])
+
+    axes_01_0 = fig.add_subplot(gs01[:4, :])
+    
+    axes_00_1 = fig.add_subplot(gs00[5:, :])
+    
+    axes_01_1 = fig.add_subplot(gs01[5:, :])
+   
+    # Fig Sup 5A
+    
+    axes_00_0 = fig_pcolor(axes_00_0, 'p', p_set, AB_i, N_spe, m_spe, t_spe, p_spe, Be[0], rep_spe, 'exp_value', r'slower col. ($\alpha_0 = %0.1f$)'%Be[0], 'A', 'output_sde/sup5A')
+
+    axes_00_1 = fig_pcolor(axes_00_1, 'p', p_set, AB_i, N_spe, m_spe, t_spe, p_spe, Be[1], rep_spe, 'exp_value', r'faster col. ($\alpha_0 = %0.1f$)'%Be[1], None, 'output_sde/sup5A')
+    
+    # Fig Sup 5B
+    
+    axes_01_0 = fig_pcolor(axes_01_0, 'm', m_set, AB_i, N_spe, m_spe, t_spe, p_spe, Be[0], rep_spe, 'exp_value', r'slower col. ($\alpha_0 = %0.1f$)'%Be[0], 'B', 'output_sde/sup5B')
+    
+    axes_01_1 = fig_pcolor(axes_01_1, 'm', m_set, AB_i, N_spe, m_spe, t_spe, p_spe, Be[1], rep_spe, 'exp_value', r'faster col. ($\alpha_0 = %0.1f$)'%Be[1], None, 'output_sde/sup5B')
+    
+    axes_00_1.text(-0.2, 1.6, 'inheritance', fontsize = 16, rotation = 'vertical', transform = axes_00_1.transAxes)    
+    
+    axes_00_vl = [i*j for i in [3,5,6,8,9] for j in np.logspace(-5,-1,5)]
+    
+    axes_01_vl = [i*j for i in [3,5,6,8,9] for j in np.logspace(-5,-1,5)]
+    
+    for vl in axes_00_vl: axes_00_0.axvline(vl, 0, 3, color = 'w', linewidth = 0.25)
+    
+    for vl in axes_00_vl: axes_00_1.axvline(vl, 0, 3, color = 'w', linewidth = 0.25)
+    
+    for vl in axes_01_vl: axes_01_0.axvline(vl, 0, 3, color = 'w', linewidth = 0.25)
+    
+    for vl in axes_01_vl: axes_01_1.axvline(vl, 0, 3, color = 'w', linewidth = 0.25)
+    
+    fig.subplots_adjust(bottom=0., top=1., left=0., right=0.86)#, wspace=0.3, hspace=0.05
+    
+    cb_ax = fig.add_axes([0.88, -0.1, 0.13, 1.2])
+
+    cb_ax.axis('off')
+
+    img = cb_ax.imshow(np.array([[1E-7,1E0]]), cmap = mp.cm.inferno, norm=colors.LogNorm(vmin=1E-7, vmax=1E0))
+
+    img.set_visible(False)
+
+    cb_ax.set_aspect('auto')
+
+    cbar = fig.colorbar(img, orientation = "vertical", ax = cb_ax, fraction = 1.0)
+
+    cbar.ax.tick_params(labelsize = 12)
+
+    cbar.ax.set_xticklabels(cbar.ax.get_xticklabels(), rotation = 90)
+
+    cbar.set_label(r'average frequency ($\overline{x_1}$)',fontsize = 16)
+    
+    mp.savefig('figsup5.pdf', dpi = 300, bbox_inches = 'tight', format = 'pdf')
+ 
+    
+# Figure Sup 6
+
+def figsup6(spe_args):
     
     taxa = 'all'
     
@@ -1470,7 +1551,7 @@ def figsup5(spe_args):
 
     for ind in range(2):
         
-        # Fig Sup 5A
+        # Fig Sup 6A
         
         x_coord, y_coord = [], []
         
@@ -1502,7 +1583,7 @@ def figsup5(spe_args):
             
         axes[0].scatter(x = x_coord, y = y_coord, c = m_set, vmin = m_set[0], vmax = m_set[-1], cmap = 'viridis', marker = markers[ind], norm = colors.LogNorm(vmin=1E-5, vmax=1E0), linewidths=0.2)
     
-        # Fig Sup 5B
+        # Fig Sup 6B
 
         x_coord, y_coord = [], []
         
@@ -1534,7 +1615,7 @@ def figsup5(spe_args):
             
         axes[1].scatter(x = x_coord, y = y_coord, c = t_set, vmin = t_set[0], vmax = t_set[-1], cmap = 'viridis', marker = markers[ind], norm = colors.LogNorm(vmin=1E-7, vmax=1E-2), linewidths=0.2)
   
-        # Fig Sup 5C
+        # Fig Sup 6C
 
         x_coord, y_coord = [], []
         
@@ -1688,12 +1769,12 @@ def figsup5(spe_args):
 
     axes[1].legend(handles=legend_elements, bbox_to_anchor=(0.5, -0.85), loc='lower center', ncol = 2, title = r"faster col. $\alpha_0 \to 0$")
 
-    mp.savefig('figsup5.pdf', dpi = 300, bbox_inches = 'tight', format = 'pdf')
+    mp.savefig('figsup6.pdf', dpi = 300, bbox_inches = 'tight', format = 'pdf')
 
 
-# Figure Sup 6   
+# Figure Sup 7  
 
-def figsup6(spe_args):
+def figsup7(spe_args):
     
     taxa = 'focal'
     
@@ -1723,7 +1804,7 @@ def figsup6(spe_args):
 
     for ind in range(2):
         
-        # Fig Sup 6A
+        # Fig Sup 7A
         
         x_coord, y_coord = [], []
         
@@ -1755,7 +1836,7 @@ def figsup6(spe_args):
             
         axes[0,0].scatter(x = x_coord, y = y_coord, c = p_set, vmin = p_set[0], vmax = p_set[-1], cmap = 'viridis', marker = markers[ind], norm = colors.LogNorm(vmin=1E-5, vmax=1E0), linewidths=0.2)
 
-        # Fig Sup 6B
+        # Fig Sup 7B
         
         x_coord, y_coord = [], []
         
@@ -1787,7 +1868,7 @@ def figsup6(spe_args):
             
         axes[0,1].scatter(x = x_coord, y = y_coord, c = m_set, vmin = m_set[0], vmax = m_set[-1], cmap = 'viridis', marker = markers[ind], norm = colors.LogNorm(vmin=1E-5, vmax=1E0), linewidths=0.2)
     
-        # Fig Sup 6C
+        # Fig Sup 7C
 
         x_coord, y_coord = [], []
         
@@ -1819,7 +1900,7 @@ def figsup6(spe_args):
             
         axes[1,0].scatter(x = x_coord, y = y_coord, c = t_set, vmin = t_set[0], vmax = t_set[-1], cmap = 'viridis', marker = markers[ind], norm = colors.LogNorm(vmin=1E-7, vmax=1E-2), linewidths=0.2)
   
-        # Fig Sup 6D
+        # Fig Sup 7D
 
         x_coord, y_coord = [], []
         
@@ -2009,4 +2090,4 @@ def figsup6(spe_args):
 
     axes[1,1].legend(handles=legend_elements, bbox_to_anchor=(1.25, 1.25), loc='upper left', ncol = 1, title = r"faster col. $\alpha_0 \to 0$")
 
-    mp.savefig('figsup6.pdf', dpi = 300, bbox_inches = 'tight', format = 'pdf')
+    mp.savefig('figsup7.pdf', dpi = 300, bbox_inches = 'tight', format = 'pdf')
