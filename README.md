@@ -1,6 +1,6 @@
 # microbiome-inheritance
 
-This repository includes the code used to produce the results presented in *Zapien, et al.*, 2021.
+This repository includes the code used to produce the results presented in *Zapien, et al.*, 2022.
 
 The aim is to study the effect that microbial inheritance has on a neutral model of the microbiome.
 
