@@ -68,15 +68,22 @@ N_spe, m_spe, t_spe, p_spe, AB_i, Be = 1E5, 1E-2, 1E-4, 1E-2, [1, 1, 1E1, 1E1], 
 figsup4([N_spe, m_spe, t_spe, p_spe, AB_i, Be])
 
 
-# Figure Sup 5 (Difference in microbial load between `low' and `seed-like' inheritance.)
+# Figure Sup 5 (Effect of selective inheritance - focal microbial taxon)
 
-N_spe, m_spe, t_spe, p_spe, Be = 1E5, 1E-2, 1E-4, 1E-2, 1E-1
+N_spe, m_spe, t_spe, p_spe, AB_i, Be = 1E5, 1E-2, 1E-6, 1E-2, [[1, 1, 1E1, 1E1], [1, 1, 1E1, 1E2], [1, 1, 1E1, 1E3]], [5E-1, 1E-1]
 
-figsup5([N_spe, m_spe, t_spe, p_spe, Be])
+figsup5([N_spe, m_spe, t_spe, p_spe, AB_i, Be])
 
 
-# Figure Sup 6 (Difference in the frequency of a microbial taxon between `low' and `seed-like' inheritance.)
+# Figure Sup 6 (Comparison of the modes of inheritance - microbial load)
 
 N_spe, m_spe, t_spe, p_spe, Be = 1E5, 1E-2, 1E-4, 1E-2, 1E-1
 
 figsup6([N_spe, m_spe, t_spe, p_spe, Be])
+
+
+# Figure Sup 7 (Comparison of the modes of inheritance - focal microbial taxon)
+
+N_spe, m_spe, t_spe, p_spe, Be = 1E5, 1E-2, 1E-4, 1E-2, 1E-1
+
+figsup7([N_spe, m_spe, t_spe, p_spe, Be])
